@@ -4,7 +4,7 @@ import Navbar from "./components/navbar";
 
 function App() {
   return (
-    <div className="container">
+    <div>
       <Navbar />
       <Movie />
     </div>

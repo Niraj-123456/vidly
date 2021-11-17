@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import { getMovies } from "../fakeMovieService";
+import Like from "./common/like";
 
 class Movie extends Component {
   state = {
     movies: getMovies(),
   };
+
+  handleDelete = () => {
+    console.log("Delete Event Triggered");
+  };
   render() {
     return (
-      <div className="m-3">
-        <h3>There are 9 movies in database.</h3>
+      <div className="container my-3">
+        <h3>There are {this.state.movies.length} movies in database.</h3>
         <table className="table my-3">
           <thead>
             <tr>
@@ -16,6 +21,7 @@ class Movie extends Component {
               <th>Genre</th>
               <th>Stock</th>
               <th>Rating</th>
+              <th>Like</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -28,6 +34,9 @@ class Movie extends Component {
                   <td>{movie.genre.name}</td>
                   <td>{movie.numberInStock}</td>
                   <td>{movie.dailyRentalRate}</td>
+                  <td>
+                    <Like />
+                  </td>
                   <td>
                     <a className="btn btn-danger btn-sm">Delete</a>
                   </td>
