@@ -4,6 +4,7 @@ import { getGenres } from "../fakeGenreService";
 import Genre from "./genre";
 import Like from "./common/like";
 import Pagination from "./common/pagination";
+import { paginate } from "../utils/paginate";
 
 class Movie extends Component {
   state = {
@@ -34,7 +35,9 @@ class Movie extends Component {
   };
   render() {
     const { length: count } = this.state.movies;
-    const { currentPage, pageSize } = this.state;
+    const { currentPage, pageSize, movies: allMovies } = this.state;
+
+    const movies = paginate(allMovies, currentPage, pageSize);
     return (
       <div className="container my-3">
         {count === 0 ? (
@@ -70,7 +73,7 @@ class Movie extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.movies.map((movie) => {
+                    {movies.map((movie) => {
                       return (
                         <tr key={movie._id}>
                           <td>{movie.title}</td>
