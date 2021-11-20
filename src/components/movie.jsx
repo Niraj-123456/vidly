@@ -20,9 +20,10 @@ class Movie extends Component {
     this.setState({ movies });
   };
   render() {
+    const count = this.state.movies.length;
     return (
       <div className="container my-3">
-        <h3>There are {this.state.movies.length} movies in database.</h3>
+        <h3>There are {count} movies in database.</h3>
         <table className="table my-3">
           <thead>
             <tr>
