@@ -9,6 +9,7 @@ class Movie extends Component {
   state = {
     movies: getMovies(),
     genres: getGenres(),
+    currentPage: 1,
     pageSize: 4,
   };
 
@@ -28,11 +29,12 @@ class Movie extends Component {
     console.log("Genre selected", genre);
   };
 
-  handlePageChange = () => {
-    console.log("Page Changed");
+  handlePageChange = (page) => {
+    this.setState({ currentPage: page });
   };
   render() {
     const { length: count } = this.state.movies;
+    const { currentPage, pageSize } = this.state;
     return (
       <div className="container my-3">
         {count === 0 ? (
@@ -99,8 +101,9 @@ class Movie extends Component {
           </React.Fragment>
         )}
         <Pagination
-          itemCount={count}
-          pageSize={this.state.pageSize}
+          itemCounts={count}
+          pageSize={pageSize}
+          currentPage={currentPage}
           onPageChange={this.handlePageChange}
         />
       </div>
