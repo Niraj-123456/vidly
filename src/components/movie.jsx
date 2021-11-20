@@ -7,8 +7,17 @@ class Movie extends Component {
     movies: getMovies(),
   };
 
-  handleDelete = () => {
-    console.log("Delete Event Triggered");
+  handleDelete = (movie) => {
+    const movies = this.state.movies.filter((m) => m._id != movie._id);
+    this.setState({ movies });
+  };
+
+  handleLike = (movie) => {
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
+    movies[index] = { ...movies[index] };
+    movies[index].liked = !movies[index].liked;
+    this.setState({ movies });
   };
   render() {
     return (
@@ -27,7 +36,6 @@ class Movie extends Component {
           </thead>
           <tbody>
             {this.state.movies.map((movie) => {
-              console.log(movie);
               return (
                 <tr key={movie._id}>
                   <td>{movie.title}</td>
@@ -35,10 +43,18 @@ class Movie extends Component {
                   <td>{movie.numberInStock}</td>
                   <td>{movie.dailyRentalRate}</td>
                   <td>
-                    <Like />
+                    <Like
+                      onLiked={() => this.handleLike(movie)}
+                      liked={movie.liked}
+                    />
                   </td>
                   <td>
-                    <a className="btn btn-danger btn-sm">Delete</a>
+                    <a
+                      onClick={() => this.handleDelete(movie)}
+                      className="btn btn-danger btn-sm"
+                    >
+                      Delete
+                    </a>
                   </td>
                 </tr>
               );

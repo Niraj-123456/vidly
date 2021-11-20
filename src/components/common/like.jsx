@@ -1,9 +1,15 @@
 import React from "react";
 
-const Like = () => {
+const Like = (props) => {
+  let classes = "fas fa-heart";
+  if (!props.liked) classes = "far fa-heart";
   return (
     <div>
-      <i class="far fa-heart"></i>
+      <i
+        onClick={props.onLiked}
+        style={{ cursor: "pointer" }}
+        className={classes}
+      ></i>
     </div>
   );
 };
