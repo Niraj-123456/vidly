@@ -12,6 +12,7 @@ class Movie extends Component {
     genres: getGenres(),
     currentPage: 1,
     pageSize: 4,
+    selectedGenre: "",
   };
 
   handleDelete = (movie) => {
@@ -27,7 +28,7 @@ class Movie extends Component {
     this.setState({ movies });
   };
   handleGenreSelected = (genre) => {
-    console.log("Genre selected", genre);
+    this.setState({ selectedGenre: genre });
   };
 
   handlePageChange = (page) => {
@@ -35,7 +36,13 @@ class Movie extends Component {
   };
   render() {
     const { length: count } = this.state.movies;
-    const { currentPage, pageSize, movies: allMovies } = this.state;
+    const {
+      currentPage,
+      pageSize,
+      movies: allMovies,
+      genres,
+      selectedGenre,
+    } = this.state;
 
     const movies = paginate(allMovies, currentPage, pageSize);
     return (
@@ -57,7 +64,8 @@ class Movie extends Component {
             </div>
             <div className="row my-3">
               <Genre
-                genres={this.state.genres}
+                genres={genres}
+                selectedGenre={selectedGenre}
                 onGenreSelected={this.handleGenreSelected}
               />
               <div className="col">

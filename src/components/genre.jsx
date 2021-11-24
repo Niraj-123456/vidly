@@ -1,15 +1,21 @@
 import React from "react";
 
 function genre(props) {
+  const { genres, onGenreSelected, selectedGenre } = props;
   return (
     <React.Fragment>
       <div className="col-3 my-2">
         <ul className="list-group">
-          {props.genres.map((genre) => (
+          {genres.map((genre) => (
             <li
+              style={{ cursor: "pointer" }}
               key={genre._id}
-              className="list-group-item"
-              onClick={() => props.onGenreSelected(genre.name)}
+              className={
+                genre.name === selectedGenre
+                  ? "list-group-item active"
+                  : "list-group-item"
+              }
+              onClick={() => onGenreSelected(genre.name)}
             >
               {genre.name}
             </li>
