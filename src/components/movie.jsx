@@ -8,12 +8,20 @@ import { paginate } from "../utils/paginate";
 
 class Movie extends Component {
   state = {
-    movies: getMovies(),
-    genres: getGenres(),
+    movies: [],
+    genres: [],
     currentPage: 1,
     pageSize: 4,
     selectedGenre: "",
   };
+
+  componentDidMount() {
+    const genres = [{ name: "All Genres" }, ...getGenres()];
+    this.setState({
+      movies: getMovies(),
+      genres: genres,
+    });
+  }
 
   handleDelete = (movie) => {
     const movies = this.state.movies.filter((m) => m._id !== movie._id);
@@ -27,13 +35,15 @@ class Movie extends Component {
     movies[index].liked = !movies[index].liked;
     this.setState({ movies });
   };
-  handleGenreSelected = (genre) => {
-    this.setState({ selectedGenre: genre });
-  };
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
+
+  handleGenreSelected = (genre) => {
+    this.setState({ selectedGenre: genre, currentPage: 1 });
+  };
+
   render() {
     const { length: count } = this.state.movies;
     const {
@@ -44,7 +54,13 @@ class Movie extends Component {
       selectedGenre,
     } = this.state;
 
-    const movies = paginate(allMovies, currentPage, pageSize);
+    const filtered =
+      selectedGenre && selectedGenre._id
+        ? allMovies.filter((g) => g.genre._id === selectedGenre._id)
+        : allMovies;
+
+    const movies = paginate(filtered, currentPage, pageSize);
+
     return (
       <div className="container my-3">
         {count === 0 ? (
@@ -58,7 +74,7 @@ class Movie extends Component {
             <div className="row">
               <div className="col">
                 <h3 className="text-center">
-                  There are {count} movies in database.
+                  There are {filtered.length} movies in database.
                 </h3>
               </div>
             </div>
@@ -112,7 +128,7 @@ class Movie extends Component {
           </React.Fragment>
         )}
         <Pagination
-          itemCounts={count}
+          itemCounts={filtered.length}
           pageSize={pageSize}
           currentPage={currentPage}
           onPageChange={this.handlePageChange}

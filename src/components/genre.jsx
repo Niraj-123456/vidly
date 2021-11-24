@@ -11,11 +11,11 @@ function genre(props) {
               style={{ cursor: "pointer" }}
               key={genre._id}
               className={
-                genre.name === selectedGenre
+                genre === selectedGenre
                   ? "list-group-item active"
                   : "list-group-item"
               }
-              onClick={() => onGenreSelected(genre.name)}
+              onClick={() => onGenreSelected(genre)}
             >
               {genre.name}
             </li>
