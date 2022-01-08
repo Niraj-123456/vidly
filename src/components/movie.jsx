@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { getMovies } from "../fakeMovieService";
 import { getGenres } from "../fakeGenreService";
+import Table from "./table";
 import Genre from "./genre";
-import Like from "./common/like";
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 
@@ -84,46 +84,11 @@ class Movie extends Component {
                 selectedGenre={selectedGenre}
                 onGenreSelected={this.handleGenreSelected}
               />
-              <div className="col">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Genre</th>
-                      <th>Stock</th>
-                      <th>Rating</th>
-                      <th>Like</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {movies.map((movie) => {
-                      return (
-                        <tr key={movie._id}>
-                          <td>{movie.title}</td>
-                          <td>{movie.genre.name}</td>
-                          <td>{movie.numberInStock}</td>
-                          <td>{movie.dailyRentalRate}</td>
-                          <td>
-                            <Like
-                              onLiked={() => this.handleLike(movie)}
-                              liked={movie.liked}
-                            />
-                          </td>
-                          <td>
-                            <a
-                              onClick={() => this.handleDelete(movie)}
-                              className="btn btn-danger btn-sm"
-                            >
-                              Delete
-                            </a>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
+              <Table
+                movies={movies}
+                doMovieLike={this.handleLike}
+                doMovieDelete={this.handleDelete}
+              />
             </div>
           </React.Fragment>
         )}
