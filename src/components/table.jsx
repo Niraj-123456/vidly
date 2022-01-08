@@ -1,26 +1,25 @@
 import React from "react";
 import Like from "./common/like";
+import TableHeader from "./common/tableHeader";
 
 function Table(props) {
-  const { movies, doMovieLike, doMovieDelete } = props;
+  const { movies, sortColumn, doMovieLike, doMovieDelete, onMovieSort } = props;
+  const columns = [
+    { path: "title", label: "Title" },
+    { path: "genre.name", label: "Genre" },
+    { path: "numberInStock", label: "Stock" },
+    { path: "dailyRentalRate", label: "Rating" },
+    { key: "like" },
+    { key: "delete" },
+  ];
   return (
     <div className="col">
       <table className="table">
-        <thead>
-          <tr>
-            <th>
-              Title{" "}
-              <span>
-                <i className="fas fa-caret-down"></i>
-              </span>
-            </th>
-            <th>Genre</th>
-            <th>Stock</th>
-            <th>Rating</th>
-            <th>Like</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+        <TableHeader
+          columns={columns}
+          sortMovie={onMovieSort}
+          sortColumn={sortColumn}
+        />
         <tbody>
           {movies.map((movie) => {
             return (
