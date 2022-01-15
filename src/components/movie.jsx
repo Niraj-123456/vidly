@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { getMovies } from "../fakeMovieService";
 import { getGenres } from "../fakeGenreService";
+import { Link } from "react-router-dom";
+import Pagination from "./common/pagination";
+import { paginate } from "../utils/paginate";
 import Table from "./table";
 import Genre from "./genre";
 import _ from "lodash";
-import Pagination from "./common/pagination";
-import { paginate } from "../utils/paginate";
 
 class Movie extends Component {
   state = {
@@ -46,9 +47,8 @@ class Movie extends Component {
     this.setState({ selectedGenre: genre, currentPage: 1 });
   };
 
-  handleSort = (path) => {
-    this.setState({ sortColumn: { path, order: "asc" } });
-    console.log(path);
+  handleSort = (sortColumn) => {
+    this.setState({ sortColumn });
   };
 
   render() {
@@ -82,6 +82,13 @@ class Movie extends Component {
         ) : (
           <React.Fragment>
             <div className="row">
+              <div className="col-4">
+                {/* Movie Form- add or update Movie*/}
+                <Link to="/movies/new" className="btn btn-primary">
+                  Add Movie
+                </Link>
+                {/* Movie Form- add or update Movie */}
+              </div>
               <div className="col">
                 <h3 className="text-center">
                   There are {filtered.length} movies in database.
