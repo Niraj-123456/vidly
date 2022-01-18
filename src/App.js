@@ -3,6 +3,7 @@ import Movie from "./components/movie";
 import Navbar from "./components/navbar";
 import MovieForm from "./components/movieForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NotFound from "./components/notFound";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
         <Routes>
           <Route path="movies/new" element={<MovieForm />} />
           <Route path="/movies/:id" element={<MovieForm />} />
-          <Route path="/" element={<Movie />} />
+          <Route index element={<Movie />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
